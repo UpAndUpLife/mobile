@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "upandup-mobile",
-    "slug": "upandup-mobile",
+    "name": "upandup_mobile",
+    "slug": "upandup_mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
