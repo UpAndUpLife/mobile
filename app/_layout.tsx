@@ -1,58 +1,47 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { loginAtom } from "@/state/LoginState";
+import { Stack, router } from "expo-router";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { ToastProvider } from "react-native-toast-notifications";
 
-import { useColorScheme } from '@/components/useColorScheme';
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+const RootLayout = () => {
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
+  const [login, setLogin] = useAtom(loginAtom);
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
-  });
-
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+  useEffect(()=>{
+    if (login === false) {
+        router.push("/auth/signup");
     }
-  }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+    else{ 
+        router.push("/(tabs)/home")
+    }
+  })
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
-  );
+
+    <ToastProvider>
+          {
+            login ? 
+            (
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              </Stack>
+            )
+            : 
+            (
+              <Stack>
+                <Stack.Screen name="auth/signup" options={{ headerShown: false}} />
+                <Stack.Screen name="auth/login" options={{ headerShown: false}} />
+              </Stack>
+
+            )
+          }
+    </ToastProvider>
+  
+  )
 }
+
+
+export default RootLayout;
