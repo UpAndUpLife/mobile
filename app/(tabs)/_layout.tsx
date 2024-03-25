@@ -35,6 +35,7 @@ const RootLayout = () => {
 
         }}
       />
+      
     </Drawer>
     </GestureHandlerRootView>
 

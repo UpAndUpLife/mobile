@@ -1,6 +1,6 @@
 import { TextInput } from 'react-native-paper';
 
-import { View } from '@/components/Themed';
+import { View } from 'react-native';
 import { useState } from 'react';
 import { Text, Button } from 'react-native-paper';
 import { useToast } from 'react-native-toast-notifications';
@@ -45,7 +45,7 @@ export default function LoginPage1() {
 
   
   return (
-    <View className="flex w-full h-full items-center"> 
+    <View className="flex w-full h-full items-center bg-white"> 
 
       <View className="w-full h-[45%] items-center justify-center" >
         <LottieView source={require("../../assets/vectors/loginScreen.json")} className="w-[70%] h-[70%]" autoPlay loop={false}/>
@@ -58,7 +58,7 @@ export default function LoginPage1() {
         <TextInput className="w-[90%] m-2" label="email" value={email} onChangeText={setEmail} inputMode='email' placeholder='jhon@xyz.com' mode='outlined' theme={{colors: {primary: "#60a5fa"}}} />
 
         {
-          otpSent && <TextInput className="w-[90%] m-2" label="OTP" value={otp} onChangeText={setOtp} inputMode='text' mode='outlined' theme={{colors: {primary: "#60a5fa"}}}/>
+          otpSent && <TextInput className="w-[90%] m-2" label="OTP" value={otp} keyboardType="numeric" onChangeText={setOtp} inputMode='text' mode='outlined' theme={{colors: {primary: "#60a5fa"}}}/>
         }
 
         {

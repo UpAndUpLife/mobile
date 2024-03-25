@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
-import { View } from '@/components/Themed';
+import { View } from 'react-native';
 import { useState } from 'react';
 import { Text, Button } from 'react-native-paper';
 import { createWallet } from '@/api/login';
@@ -27,7 +27,7 @@ export default function Signup() {
   }
   
   return (
-    <View className="flex w-full h-full items-center"> 
+    <View className="flex w-full h-full items-center bg-white"> 
 
       <View className="w-full h-[55%] items-center justify-center" >
         <LottieView source={require("../../assets/vectors/signupScreen.json")} className="w-[80%] h-[80%]" autoPlay loop={false}/>

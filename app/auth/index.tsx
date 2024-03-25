@@ -1,4 +1,4 @@
-import { View } from '@/components/Themed';
+import { View } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import { router } from 'expo-router';
@@ -6,7 +6,7 @@ import { router } from 'expo-router';
 export default function AuthPage() {
 
   return (
-    <View className="flex w-full h-full items-center justify-between"> 
+    <View className="flex w-full h-full items-center justify-between bg-white"> 
 
         <View className="flex-1 w-full items-center justify-center" >
          <LottieView source={require("../../assets/vectors/authScreen.json")} className="w-1/2 h-1/2" autoPlay loop={false}/>
