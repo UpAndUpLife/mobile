@@ -1,26 +1,45 @@
-import { loginAtom } from "@/state/LoginState";
+import { checkLogin } from "@/api/login";
+import { loginAtom } from "@/state/GlobalState";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack, router } from "expo-router";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
+import { ActivityIndicator } from "react-native";
+import { DefaultTheme, PaperProvider } from "react-native-paper";
 import { ToastProvider } from "react-native-toast-notifications";
+
 
 
 const RootLayout = () => {
 
   const [login, setLogin] = useAtom(loginAtom);
 
+  const checkLoggedin = async ()=>{
+
+    let authToken = await AsyncStorage.getItem("authToken");
+
+    if (authToken !== null){
+      let isloggedin = await checkLogin(authToken);
+      setLogin(isloggedin);
+      if (isloggedin === true){
+        router.push("/(tabs)")
+      }
+
+      return
+    }
+    
+    setLogin(false);
+    router.push("/auth");
+  }
+
   useEffect(()=>{
-    if (login === false) {
-        router.push("/auth/signup");
-    }
+    checkLoggedin()
+  },[])
 
-    else{ 
-        router.push("/(tabs)/home")
-    }
-  })
-
+  
   return (
 
+    <PaperProvider>
     <ToastProvider>
           {
             login ? 
@@ -32,14 +51,15 @@ const RootLayout = () => {
             : 
             (
               <Stack>
-                <Stack.Screen name="auth/signup" options={{ headerShown: false}} />
-                <Stack.Screen name="auth/login" options={{ headerShown: false}} />
+                <Stack.Screen name="auth/index" options={{ headerShown: false}} />
+                <Stack.Screen name="auth/signup" options={{ headerShown: true, headerTitle: ""}} />
+                <Stack.Screen name="auth/login" options={{ headerShown: true, headerTitle: ""}} />
               </Stack>
-
             )
           }
     </ToastProvider>
-  
+    </PaperProvider>
+
   )
 }
 

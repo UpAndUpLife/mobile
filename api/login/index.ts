@@ -1,13 +1,11 @@
-import { useToast } from "react-native-toast-notifications";
-
-const IP = "http://192.168.1.41:3001"
+const IP = "http://192.168.0.7:3001/api"
 
 export async function createWallet(name: string,email: string): Promise<[string,string]> {
 
 
     try {
 
-        let res = await fetch(`${IP}/create-wallet`, {
+        let res = await fetch(`${IP}/auth/create-wallet`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -36,7 +34,7 @@ export async function sendOTP(email: string): Promise<[string | null, string,str
 
     try {
 
-        let res = await fetch(`${IP}/send-otp`, {
+        let res = await fetch(`${IP}/auth/send-otp`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -67,10 +65,9 @@ export async function sendOTP(email: string): Promise<[string | null, string,str
 
 export async function getAuthToken(challange: string, otp: string): Promise<[string | null, string,string]> {
 
-
     try {
 
-        let res = await fetch(`${IP}/get-auth-token`, {
+        let res = await fetch(`${IP}/auth/get-auth-token`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -96,5 +93,61 @@ export async function getAuthToken(challange: string, otp: string): Promise<[str
     } catch (e: any) {
         console.log(e,"error")
         return [null,"Something went wrong", "danger"];
+    }
+}
+
+
+
+
+export async function checkLogin(authToken: String): Promise<boolean> {
+
+
+    try {
+
+        let res = await fetch(`${IP}/auth/check-login`, {
+            method: "GET",
+            headers: {
+                'Authorization': authToken,
+                'Content-Type': 'application/json'
+            }
+        })
+
+        let data = await res.json();
+        if (data.code === 0) {
+            return true
+        }
+
+       return false
+
+    } catch (e: any) {
+        console.log(e,"error")
+        return false
+    }
+}
+
+
+export async function getUserInfo(authToken: String): Promise<boolean> {
+
+
+    try {
+
+        let res = await fetch(`${IP}/auth/check-login`, {
+            method: "GET",
+            headers: {
+                'Authorization': authToken,
+                'Content-Type': 'application/json'
+            }
+        })
+
+        let data = await res.json();
+        if (data.code === 0) {
+            return true
+        }
+
+       return false
+
+    } catch (e: any) {
+        console.log(e,"error")
+        return false
     }
 }

@@ -6,8 +6,9 @@ import { Text, Button } from 'react-native-paper';
 import { useToast } from 'react-native-toast-notifications';
 import { getAuthToken, sendOTP } from '@/api/login';
 import { useAtom } from 'jotai';
-import { loginAtom } from '@/state/LoginState';
+import { loginAtom } from '@/state/GlobalState';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LottieView from 'lottie-react-native';
 
 export default function LoginPage1() {
 
@@ -46,25 +47,33 @@ export default function LoginPage1() {
   return (
     <View className="flex w-full h-full items-center"> 
 
-      <Text variant='displaySmall' className="m-10">Login</Text>
-      <TextInput className="w-[80%] m-2" label="email" value={email} onChangeText={setEmail} inputMode='email' placeholder='jhon@xyz.com'/>
+      <View className="w-full h-[45%] items-center justify-center" >
+        <LottieView source={require("../../assets/vectors/loginScreen.json")} className="w-[70%] h-[70%]" autoPlay loop={false}/>
+      </View>
 
-      {
-        otpSent && <TextInput className="w-[80%] m-2" label="OTP" value={otp} onChangeText={setOtp} inputMode='text'/>
-      }
 
-      {
-        otpSent ?
-        <Button className="mt-10" icon="wallet" mode="contained" onPress={onSubmit}>
-          Login
-        </Button>
+      <View className="flex w-full items-center">
 
-        : 
-        <Button className="mt-10" icon="wallet" mode="contained" onPress={()=>sendotp()}>
-          Get OTP
-        </Button>
-      }
+      <Text className="m-3 text-2xl font-bold text-gray-700">Welcome Back!</Text>
+        <TextInput className="w-[90%] m-2" label="email" value={email} onChangeText={setEmail} inputMode='email' placeholder='jhon@xyz.com' mode='outlined' theme={{colors: {primary: "#60a5fa"}}} />
 
+        {
+          otpSent && <TextInput className="w-[90%] m-2" label="OTP" value={otp} onChangeText={setOtp} inputMode='text' mode='outlined' theme={{colors: {primary: "#60a5fa"}}}/>
+        }
+
+        {
+          otpSent ?
+          <Button className="mt-5 w-[90%] rounded-lg" icon="login" mode="contained" onPress={onSubmit} theme={{colors: {primary: "#60a5fa"}}}> 
+            LOGIN
+          </Button>
+
+          : 
+          <Button onPress={()=>sendotp()} className="mt-5 w-[90%] rounded-lg" style={{}} icon="keyboard" mode="outlined" theme={{colors: {primary: "#60a5fa"}}}>
+            GET OTP
+          </Button>
+        }
+
+      </View>
     
     </View>
   );

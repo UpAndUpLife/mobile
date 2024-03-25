@@ -7,6 +7,7 @@ import { Text, Button } from 'react-native-paper';
 import { createWallet } from '@/api/login';
 import { useToast } from 'react-native-toast-notifications';
 import { Link, router } from 'expo-router';
+import LottieView from 'lottie-react-native';
 
 export default function Signup() {
 
@@ -28,15 +29,22 @@ export default function Signup() {
   return (
     <View className="flex w-full h-full items-center"> 
 
-      <Text variant='displaySmall' className="m-10">Create Account</Text>
-      <TextInput className="w-[80%] m-2" label="name" value={name} onChangeText={setname}/>
-      <TextInput className="w-[80%] m-2" label="email" value={email} onChangeText={setEmail} inputMode='email'/>
+      <View className="w-full h-[55%] items-center justify-center" >
+        <LottieView source={require("../../assets/vectors/signupScreen.json")} className="w-[80%] h-[80%]" autoPlay loop={false}/>
+      </View>
 
-        <Link href={"/auth/login"}>or Login</Link>
+      <View className="flex w-full items-center">
 
-      <Button onPressOut={onSubmit} className="mt-10" icon="wallet" mode="contained" onPress={()=> createWallet(name,email)}>
-        Create Wallet
-      </Button>
+        <Text className="m-3 text-2xl font-bold text-gray-700">Let's Get Started!</Text>
+        <TextInput className="w-[90%] m-2" label="Name" value={name} onChangeText={setname} mode='outlined' theme={{colors: {primary: "#60a5fa"}}} />
+        <TextInput className="w-[90%] m-2" label="Email" value={email} onChangeText={setEmail} mode='outlined' inputMode='email' theme={{colors: {primary: "#60a5fa"}}}/>
+
+
+        <Button className="mt-5 w-[90%] rounded-lg" icon="wallet" mode="contained" onPress={()=> createWallet(name,email)} theme={{colors: {primary: "#60a5fa"}}}>
+          Create Wallet
+        </Button>
+      </View>
+
     
     </View>
   );
