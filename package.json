@@ -13,14 +13,18 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@ethersproject/shims": "^5.7.0",
     "@expo/vector-icons": "^14.0.0",
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/drawer": "^6.6.15",
     "@react-navigation/native": "^6.0.2",
+    "@reclaimprotocol/reactnative-sdk": "^1.0.1",
     "@shopify/flash-list": "^1.6.4",
     "@trinsic/service-clients": "^1.1.5018",
     "@trinsic/trinsic": "^1.13.1-rc3",
     "big-integer": "^1.6.52",
+    "canonicalize": "^2.0.0",
+    "ethers": "^6.11.1",
     "expo": "~50.0.13",
     "expo-font": "~11.10.3",
     "expo-linking": "~6.2.2",
@@ -36,6 +40,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.73.5",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-get-random-values": "^1.11.0",
     "react-native-pager-view": "^6.2.3",
     "react-native-paper": "^5.12.3",
     "react-native-reanimated": "~3.6.2",
@@ -45,6 +50,7 @@
     "react-native-toast-notifications": "^3.4.0",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
+    "react-native-webview": "^13.8.2",
     "text-encoding": "^0.7.0"
   },
   "devDependencies": {

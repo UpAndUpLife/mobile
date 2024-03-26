@@ -1,14 +1,27 @@
 import { checkLogin } from "@/api/login";
 import { loginAtom } from "@/state/GlobalState";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from "@react-navigation/native";
 import { Stack, router } from "expo-router";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { DefaultTheme, PaperProvider } from "react-native-paper";
 import { ToastProvider } from "react-native-toast-notifications";
+import * as Linking from "expo-linking";
 
+const prefix = Linking.createURL("/");
 
+const linking = {
+  prefixes: [prefix,"upandup://", "https://upandup.com"],
+  config: {
+    screens: {
+      Index: {
+        path: "/"
+      }
+    },
+  },
+};
 
 const RootLayout = () => {
 
@@ -57,6 +70,7 @@ const RootLayout = () => {
               </Stack>
             )
           }
+
     </ToastProvider>
     </PaperProvider>
 

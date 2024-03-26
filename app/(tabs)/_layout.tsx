@@ -2,9 +2,16 @@ import { Drawer } from 'expo-router/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Avatar } from 'react-native-paper';
 import { View } from 'react-native';
+import * as Linking from 'expo-linking';
+
+const prefix = Linking.createURL('/');
 
 
 const RootLayout = () => {
+
+  const linking = {
+    prefixes: [prefix],
+  }
 
   return (
 

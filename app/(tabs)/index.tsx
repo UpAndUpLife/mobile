@@ -10,7 +10,6 @@ import { GetMyInfoResponse, TrinsicService } from '@trinsic/trinsic';
 import { TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import CredentialsList from '@/components/CredentialCard/Home/Credentials';
 import OffersList from '@/components/CredentialCard/Home/Offer';
-import { AntDesign } from '@expo/vector-icons';
 
 // Do not remove it, used for text encoding by internal trinsic package
 const TextEncodingPolyfill = require('text-encoding');
@@ -87,7 +86,6 @@ export default function Home() {
     { key: 'credentials', title: 'Credentials' },
     { key: 'offers', title: 'Offers' },
   ]);
-
 
   return (
     <View className="flex w-full h-full items-center bg-white">
