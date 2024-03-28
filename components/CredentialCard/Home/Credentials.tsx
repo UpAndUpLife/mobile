@@ -84,8 +84,6 @@ export default function CredentialsList() {
       console.log(e)
     }
 
-
-
     await reclaimClient.startSession({
       onSuccessCallback: proof => {
         console.log('Verification success', proof)

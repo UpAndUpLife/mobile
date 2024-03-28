@@ -15,7 +15,7 @@ export default function Signup() {
   const [name,setname] = useState<string>("");
   const toast = useToast();
 
-  const onSubmit = async ()=>{
+  const onCreateWallet = async ()=>{
    let [msg,code] =  await createWallet(name,email);
    toast.show(msg,{
     type: code
@@ -40,7 +40,7 @@ export default function Signup() {
         <TextInput className="w-[90%] m-2" label="Email" value={email} onChangeText={setEmail} mode='outlined' inputMode='email' theme={{colors: {primary: "#60a5fa"}}}/>
 
 
-        <Button className="mt-5 w-[90%] rounded-lg" icon="wallet" mode="contained" onPress={()=> createWallet(name,email)} theme={{colors: {primary: "#60a5fa"}}}>
+        <Button className="mt-5 w-[90%] rounded-lg" icon="wallet" mode="contained" onPress={()=> onCreateWallet()} theme={{colors: {primary: "#60a5fa"}}}>
           Create Wallet
         </Button>
       </View>

@@ -1,8 +1,10 @@
 import { Drawer } from 'expo-router/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Avatar } from 'react-native-paper';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import * as Linking from 'expo-linking';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
 
 const prefix = Linking.createURL('/');
 
@@ -34,9 +36,14 @@ const RootLayout = () => {
 
            headerRight: ()=> {
             return (
+              <Pressable onPress={async () => {
+                await AsyncStorage.removeItem("authToken")
+                router.navigate("/")
+              }}>
               <View className="bg-red-500 w-min mr-2 rounded-full border border-gray-700">
                 <Avatar.Image size={32} source={require('../../assets/images/user_prof_1.jpg')} />
               </View>
+              </Pressable>
             )
           }
 

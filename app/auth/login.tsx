@@ -9,6 +9,7 @@ import { useAtom } from 'jotai';
 import { loginAtom } from '@/state/GlobalState';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LottieView from 'lottie-react-native';
+import { router } from 'expo-router';
 
 export default function LoginPage1() {
 
@@ -38,6 +39,8 @@ export default function LoginPage1() {
     if (authToken !== null) {
       setLoggedIn(true);
       AsyncStorage.setItem('authToken',authToken)
+      toast.show("Logged in", {type: "success"});
+      router.navigate("/")
     }
 
     toast.show(msg, {type: code});

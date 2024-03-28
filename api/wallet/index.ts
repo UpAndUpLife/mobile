@@ -1,8 +1,9 @@
+import { Offer } from "@/utils/Interfaces";
 import { RequestedProofs } from "@reclaimprotocol/reactnative-sdk";
 
 const IP = "http://192.168.0.7:3001/api"
 
-export async function generateSignature(APP_SECRET: string,proofs: RequestedProofs): Promise<[string,string,string]> {
+export async function generateSignature(APP_SECRET: string, proofs: RequestedProofs): Promise<[string, string, string]> {
 
 
     try {
@@ -22,9 +23,35 @@ export async function generateSignature(APP_SECRET: string,proofs: RequestedProo
         return [data.statusUrl, data.requestUrl, "success"];
 
     } catch (e: any) {
-        console.log(e,"error")
-        return ["Something we", "danger",""];
-    }   
+        console.log(e, "error")
+        return ["Something we", "danger", ""];
+    }
+}
+
+export async function getOffers(APP_SECRET: string): Promise<[Offer[] | null,string, string]> {
+
+
+    try {
+
+        let res = await fetch(`${IP}/wallet/get-offers`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': APP_SECRET
+            }
+        })
+
+        let data: {code: number, data: Offer[]} = await res.json();
+
+        if (data.code === 0) {
+            return [data.data, "Offers fetched", "success"];
+        }
+        return [null,"Coudn't fetch the offers" ,"danger"];
+
+    } catch (e: any) {
+        console.log(e, "error")
+        return [null,"Something went wrong" ,"danger"];
+    }
 
 
 
