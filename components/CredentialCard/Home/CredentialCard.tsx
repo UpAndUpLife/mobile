@@ -1,17 +1,39 @@
-import { Offer } from "@/utils/Interfaces";
+import { ModalPendingCredential, Offer } from "@/utils/Interfaces";
 import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { Avatar, Modal } from "react-native-paper";
+import { convertObjectToArray } from "@/utils/helpers";
 
 interface CredentialCardProps {
     offer: Offer,
-    showModal: () => void
+    showModal: () => void,
+    setModalPendingCredData: React.Dispatch<React.SetStateAction<ModalPendingCredential | null>>,
+    setModalPendingCredJson: React.Dispatch<any>
 }
 
-const CredentialCard: React.FC<CredentialCardProps> = ({ offer,showModal }) => {
+const CredentialCard: React.FC<CredentialCardProps> = ({ offer, showModal, setModalPendingCredData, setModalPendingCredJson }) => {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [jsonDoc, setJsonDoc] = useState<any>(null);
+
+    const onModelShow = () => {
+
+        // can be optimesed by checking if the same state is already loaded in the useState
+
+        let modelData: ModalPendingCredential = {
+            id: jsonDoc.verifiableCredential[0].id,
+            modelID: offer.id,
+            credName: jsonDoc.verifiableCredential[0].name,
+            issuedOn: jsonDoc.verifiableCredential[0].credentialSubject.issuanceDate,
+            issuer: jsonDoc.verifiableCredential[0].issuer,
+
+            fields: convertObjectToArray(jsonDoc.verifiableCredential[0].credentialSubject.credentialSubject)
+        }
+        setModalPendingCredData(modelData);
+        setModalPendingCredJson(jsonDoc);
+        showModal();
+
+    }
 
 
     useEffect(() => {
@@ -27,7 +49,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({ offer,showModal }) => {
             {
                 isLoaded && (
                     <>
-                        <Pressable onPress={showModal}>
+                        <Pressable onPress={onModelShow}>
                             <View className="w-full flex justify-center items-center my-2">
                                 <View className="w-[95%] h-[200px] bg-red-500 rounded-lg flex justify-between">
 

@@ -1,43 +1,52 @@
-import { Proof, ReclaimClient, RequestedProofs } from "@reclaimprotocol/reactnative-sdk";
+import { Reclaim } from '@reclaimprotocol/reactnative-sdk';
 
-export const getVerificationReq = async () => {
+export async function startVerificationFlow() {
 
-  const reclaimClient = new ReclaimClient("0xDD192dE4F4a577fA9529b9a0aF5F49b5940F2590");
+  try {
+
+  const reclaimClient = new Reclaim.ProofRequest('0x046b76f77901A814C5425d2eB2d4A4c2c5FE8d8D'); // your app ID.
+  const APP_SECRET = '0x040b668873e431d2276b4b9ff1da340ca6739f40ea362a7b07952dfb08a9536f'; // your app secret key.
+  console.log('startVerificationFlow');
+  const providerIds = [
+    '5e1302ca-a3dd-4ef8-bc25-24fcc97dc800', // Aadhaar Card Date of Birth (auto seleted)
+  ];
+
   const appDeepLink = 'mychat://chat/';
-  const providers = ['5e1302ca-a3dd-4ef8-bc25-24fcc97dc800'];
-  const PRIVATE_KEY = '0xbd31ecacdff8a65ac296320b9ca993355e98c3d88c09c8424ef9f7ed575862d2';
-
   reclaimClient.setAppCallbackUrl(appDeepLink);
 
-  const providerV2 = await reclaimClient.buildHttpProviderV2ByID(providers);
-  const requestProofs = await reclaimClient.buildRequestedProofs(
-    providerV2,
-    appDeepLink,
+  reclaimClient.addContext('users address', 'add a message');
+
+  await reclaimClient.buildProofRequest(providerIds[0]);
+
+  reclaimClient.setSignature(
+    await reclaimClient.generateSignature(APP_SECRET as string),
   );
 
-  let sign = await getSignature(requestProofs, PRIVATE_KEY);
-  
-  reclaimClient.setSignature(sign);
+  console.log(
+    'signature',
+    await reclaimClient.generateSignature(APP_SECRET as string),
+  );
 
-  const req = await reclaimClient.createVerificationRequest(providers);
+  const { requestUrl, statusUrl } =
+    await reclaimClient.createVerificationRequest();
 
-  req.on('success', (data: Proof | unknown) => {
-    if (data) {
-      const proof = data as Proof;
-      console.log('success', proof.extractedParameterValues);
-      setExtracted(JSON.stringify(proof.extractedParameterValues));
-    }
+  console.log('Request URL:', requestUrl);
+  console.log('Status URL:', statusUrl);
+
+  await reclaimClient.startSession({
+    onSuccessCallback: proof => {
+      console.log('Verification success', proof);
+      // Your business logic here
+    },
+    onFailureCallback: error => {
+      console.error('Verification failed', error);
+      // Your business logic here to handle the error
+    },
   });
-  setVerificationReq(req);
-};
 
-const getSignature = async (
-  requestProofs: RequestedProofs,
-  appSecret: string,
-) => {
-  const signature = await reclaimClient.getSignature(
-    requestProofs,
-    appSecret,
-  );
-  return signature;
-};
+  } catch (err) {
+    console.log(err)
+  }
+  
+
+}

@@ -56,3 +56,35 @@ export async function getOffers(APP_SECRET: string): Promise<[Offer[] | null,str
 
 
 }
+
+
+export async function acceptCredential(authToken: String,credId: number): Promise<[string, string]> {
+
+
+    try {
+
+        let res = await fetch(`${IP}/wallet/accept-credential`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authToken,
+            },
+            body: JSON.stringify({
+                credId
+            })
+        })
+
+        let data = await res.json();
+        
+        if (data.code === 0) {
+            return ["Credential Accepted", "success"];
+        }
+        else {
+            return ["Something went wrong", "danger"]
+        }
+
+    } catch (e: any) {
+        console.log(e, "error")
+        return ["Something went wrong", "danger"];
+    }
+}
