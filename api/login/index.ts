@@ -1,4 +1,4 @@
-const IP = "http://192.168.0.7:3001/api"
+const IP = "http://192.168.21.162:3001/api"
 
 export async function createWallet(name: string,email: string): Promise<[string,string]> {
 

@@ -46,7 +46,7 @@ const RootLayout = () => {
   }
 
   useEffect(()=>{
-    checkLoggedin()
+    // checkLoggedin()
   },[])
 
   

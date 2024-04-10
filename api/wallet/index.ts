@@ -1,7 +1,7 @@
 import { Offer } from "@/utils/Interfaces";
 import { RequestedProofs } from "@reclaimprotocol/reactnative-sdk";
 
-const IP = "http://192.168.0.7:3001/api"
+const IP = "http://192.168.21.162:3001/api"
 
 export async function generateSignature(APP_SECRET: string, proofs: RequestedProofs): Promise<[string, string, string]> {
 
