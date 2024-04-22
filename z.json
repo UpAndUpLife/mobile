@@ -1,0 +1,17 @@
+[
+{
+    "claimData": {
+      "context": "{\"contextAddress\":\"users address\",\"contextMessage\":\"add a message\",\"extractedParameters\":{\"follower_count\":\"757\"},\"providerHash\":\"0x93d0f4748ae7af3d0754e7b72f0b92c1207e326fd556e0778e992606186197dd\"}",
+      "epoch": 1,
+      "identifier": "0x1fa2995c6a1b50d7cc53a6c2e76f659aae850a88fde980883386194459a33ced",
+      "owner": "0xfe6309dd9dedaabfbb0247769b5ee06f4a6a10cc",
+      "parameters": "{\"body\":\"\",\"geoLocation\":\"\",\"method\":\"GET\",\"responseMatches\":[{\"type\":\"contains\",\"value\":\"\\\"count\\\":757\"}],\"responseRedactions\":[{\"jsonPath\":\"$.data.user.edge_followed_by.count\",\"regex\":\"\\\"count\\\":(.*)\",\"xPath\":\"\"}],\"url\":\"https://www.instagram.com/api/v1/users/web_profile_info/?username=sky.is.very.blue\"}",
+      "provider": "http",
+      "timestampS": 1713003765
+    },
+    "identifier": "0x1fa2995c6a1b50d7cc53a6c2e76f659aae850a88fde980883386194459a33ced",
+    "signatures": [
+      "0xe95e35c22f9e5a36b45009de642c440968ea453068b91a36090066aa8d833373222c21581d4aafe2a1b0c4cfa756b1e68db5ecfdbd05934e59d705462139d3901b"
+    ],
+    "witnesses": "[{\"id\":\"0x244897572368eadf65bfbc5aec98d8e5443a9072\",\"url\":\"https://reclaim-node.questbook.app\"}]"
+  }]

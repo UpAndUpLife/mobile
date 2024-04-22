@@ -1,7 +1,7 @@
-import { Offer } from "@/utils/Interfaces";
+import { Credential, Offer } from "@/utils/Interfaces";
 import { RequestedProofs } from "@reclaimprotocol/reactnative-sdk";
 
-const IP = "http://192.168.21.162:3001/api"
+const IP = "http://192.168.1.2:3001/api"
 
 export async function generateSignature(APP_SECRET: string, proofs: RequestedProofs): Promise<[string, string, string]> {
 
@@ -58,6 +58,37 @@ export async function getOffers(APP_SECRET: string): Promise<[Offer[] | null,str
 }
 
 
+export async function getCreds(APP_SECRET: string): Promise<[Credential[] | null,string, string]> {
+
+
+    try {
+
+        let res = await fetch(`${IP}/wallet/get-creds`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': APP_SECRET
+            }
+        })
+
+        let data: {code: number, data: Credential[]} = await res.json();
+
+        if (data.code === 0) {
+            return [data.data, "Credentials fetched", "success"];
+        }
+        return [null,"Coudn't fetch the Credentials" ,"danger"];
+
+    } catch (e: any) {
+        console.log(e, "error")
+        return [null,"Something went wrong" ,"danger"];
+    }
+
+
+
+}
+
+
+
 export async function acceptCredential(authToken: String,credId: number): Promise<[string, string]> {
 
 
@@ -71,6 +102,40 @@ export async function acceptCredential(authToken: String,credId: number): Promis
             },
             body: JSON.stringify({
                 credId
+            })
+        })
+
+        let data = await res.json();
+        
+        if (data.code === 0) {
+            return ["Credential Accepted", "success"];
+        }
+        else {
+            return ["Something went wrong", "danger"]
+        }
+
+    } catch (e: any) {
+        console.log(e, "error")
+        return ["Something went wrong", "danger"];
+    }
+}
+
+
+
+export async function createCredential(authToken: String,proof: string, name: String): Promise<[string, string]> {
+
+
+    try {
+
+        let res = await fetch(`${IP}/wallet/issue-credential`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authToken,
+            },
+            body: JSON.stringify({
+                proof,
+                name
             })
         })
 

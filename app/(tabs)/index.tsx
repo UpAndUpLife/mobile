@@ -10,6 +10,7 @@ import { GetMyInfoResponse, TrinsicService } from '@trinsic/trinsic';
 import { TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import CredentialsList from '@/components/CredentialCard/Home/Credentials';
 import OffersList from '@/components/CredentialCard/Home/Offer';
+import * as Linking from "expo-linking";
 
 // Do not remove it, used for text encoding by internal trinsic package
 const TextEncodingPolyfill = require('text-encoding');
@@ -46,6 +47,8 @@ export default function Home() {
   let [wallet, setWallet] = useAtom(userWalletAtom);
   const [info, setInfo] = useState<GetMyInfoResponse | null>(null);
   let toast = useToast();
+  
+  const prefix = Linking.createURL("");
 
 
 

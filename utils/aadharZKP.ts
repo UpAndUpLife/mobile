@@ -1,52 +1,69 @@
-import { Reclaim } from '@reclaimprotocol/reactnative-sdk';
+import { createCredential } from '@/api/wallet';
+import { userWalletAtom } from '@/state/GlobalState';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Proof, Reclaim } from '@reclaimprotocol/reactnative-sdk';
+import { TrinsicService } from '@trinsic/trinsic';
+import { useAtom } from 'jotai';
+import { ToastType, useToast } from 'react-native-toast-notifications';
 
-export async function startVerificationFlow() {
+export async function startVerificationFlow(wallet: TrinsicService | null, toast: ToastType) {
 
   try {
 
-  const reclaimClient = new Reclaim.ProofRequest('0x046b76f77901A814C5425d2eB2d4A4c2c5FE8d8D'); // your app ID.
-  const APP_SECRET = '0x040b668873e431d2276b4b9ff1da340ca6739f40ea362a7b07952dfb08a9536f'; // your app secret key.
-  console.log('startVerificationFlow');
-  const providerIds = [
-    '5e1302ca-a3dd-4ef8-bc25-24fcc97dc800', // Aadhaar Card Date of Birth (auto seleted)
-  ];
+    let authToken  = await AsyncStorage.getItem("authToken");
+    const reclaimClient = new Reclaim.ProofRequest('0x99acCcc3cE3543442F1678402607C5C862DCE338'); // your app ID.
+    const APP_SECRET = '0x9f48e3a082790f9a39d7827a740c5e3a07e3dc396b9d053a4386c10c25fbb3e0'; // your app secret key.
+    console.log('startVerificationFlow');
+    const providerIds = [
+      '776941fa-5b20-4f07-b5b0-bbcec3a523b3', // Aadhaar Card Date of Birth (auto seleted)
+    ];
 
-  const appDeepLink = 'mychat://chat/';
-  reclaimClient.setAppCallbackUrl(appDeepLink);
+    const appDeepLink = 'upandupmobile://';
+    reclaimClient.setAppCallbackUrl(appDeepLink);
 
-  reclaimClient.addContext('users address', 'add a message');
+    reclaimClient.addContext('users address', 'add a message');
 
-  await reclaimClient.buildProofRequest(providerIds[0]);
+    await reclaimClient.buildProofRequest(providerIds[0]);
 
-  reclaimClient.setSignature(
-    await reclaimClient.generateSignature(APP_SECRET as string),
-  );
+    reclaimClient.setSignature(
+      await reclaimClient.generateSignature(APP_SECRET as string),
+    );
 
-  console.log(
-    'signature',
-    await reclaimClient.generateSignature(APP_SECRET as string),
-  );
+    console.log(
+      'signature',
+      await reclaimClient.generateSignature(APP_SECRET as string),
+    );
 
-  const { requestUrl, statusUrl } =
-    await reclaimClient.createVerificationRequest();
+    const { requestUrl, statusUrl } =
+      await reclaimClient.createVerificationRequest();
 
-  console.log('Request URL:', requestUrl);
-  console.log('Status URL:', statusUrl);
+    await reclaimClient.startSession({
+      onSuccessCallback: async proof => {
 
-  await reclaimClient.startSession({
-    onSuccessCallback: proof => {
-      console.log('Verification success', proof);
-      // Your business logic here
-    },
-    onFailureCallback: error => {
-      console.error('Verification failed', error);
-      // Your business logic here to handle the error
-    },
-  });
+
+        let [msg, status] = await createCredential(authToken!,JSON.stringify(proof), "Instagram Follwers Proof");
+
+        
+        if (status === "success") {
+
+          console.log(JSON.stringify(proof));
+          toast.show("Ratings Imported", { type: "success" });
+
+        }
+
+        else {
+          toast.show(msg, { type: status });
+        }
+      },
+      onFailureCallback: error => {
+        console.error('Verification failed', error);
+        toast.show("Cannot get ratings", { type: "danger" });
+
+      },
+    });
 
   } catch (err) {
     console.log(err)
   }
-  
 
 }

@@ -23,6 +23,7 @@ export default function LoginPage1() {
 
   const sendotp = async () => {
     let [challange_resp,msg,code] = await sendOTP(email);
+    console.log("hhh")
 
     if (challange_resp !== null){
       setChallange(challange_resp);

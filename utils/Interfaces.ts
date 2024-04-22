@@ -22,12 +22,20 @@ export interface Offer {
 }
 
 
+export interface Credential {
+    id: number,
+    toId: number,
+    name: string,
+    documentJson: string
+}
+
+
 export interface ModalPendingCredential {
     id: string,
     modelID: number,
     credName: string,
     issuedOn: String,
     issuer: string,
-    
-    fields: [string,string][]
+
+    fields: [string, string][]
 }

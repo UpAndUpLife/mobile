@@ -8,23 +8,9 @@ import { useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { DefaultTheme, PaperProvider } from "react-native-paper";
 import { ToastProvider } from "react-native-toast-notifications";
-import * as Linking from "expo-linking";
 
-const prefix = Linking.createURL("/");
-
-const linking = {
-  prefixes: [prefix,"upandup://", "https://upandup.com"],
-  config: {
-    screens: {
-      Index: {
-        path: "/"
-      }
-    },
-  },
-};
 
 const RootLayout = () => {
-
   const [login, setLogin] = useAtom(loginAtom);
 
   const checkLoggedin = async ()=>{
@@ -46,7 +32,7 @@ const RootLayout = () => {
   }
 
   useEffect(()=>{
-    // checkLoggedin()
+    checkLoggedin()
   },[])
 
   

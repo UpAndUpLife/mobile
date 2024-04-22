@@ -1,4 +1,4 @@
-const IP = "http://192.168.21.162:3001/api"
+const IP = "http://192.168.1.2:3001/api"
 
 export async function createWallet(name: string,email: string): Promise<[string,string]> {
 
@@ -33,7 +33,6 @@ export async function sendOTP(email: string): Promise<[string | null, string,str
 
 
     try {
-
         let res = await fetch(`${IP}/auth/send-otp`, {
             method: "POST",
             headers: {
@@ -43,7 +42,6 @@ export async function sendOTP(email: string): Promise<[string | null, string,str
                 email
             })
         })
-
         let data = await res.json();
 
         if (data.code === 0) {

@@ -1,0 +1,122 @@
+
+export const abi = [
+	{
+		"inputs": [
+			{
+				"internalType": "string[]",
+				"name": "_providersHashes",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "providersHashes",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "reclaimAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "provider",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "parameters",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "context",
+								"type": "string"
+							}
+						],
+						"internalType": "struct Claims.ClaimInfo",
+						"name": "claimInfo",
+						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"components": [
+									{
+										"internalType": "bytes32",
+										"name": "identifier",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "address",
+										"name": "owner",
+										"type": "address"
+									},
+									{
+										"internalType": "uint32",
+										"name": "timestampS",
+										"type": "uint32"
+									},
+									{
+										"internalType": "uint32",
+										"name": "epoch",
+										"type": "uint32"
+									}
+								],
+								"internalType": "struct Claims.CompleteClaimData",
+								"name": "claim",
+								"type": "tuple"
+							},
+							{
+								"internalType": "bytes[]",
+								"name": "signatures",
+								"type": "bytes[]"
+							}
+						],
+						"internalType": "struct Claims.SignedClaim",
+						"name": "signedClaim",
+						"type": "tuple"
+					}
+				],
+				"internalType": "struct Reclaim.Proof",
+				"name": "proof",
+				"type": "tuple"
+			}
+		],
+		"name": "verifyProof",
+		"outputs": [],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
